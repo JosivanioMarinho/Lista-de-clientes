@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.app.listadeclientes.activity.MainActivity">
+    <item
+        android:id="@+id/botaoProximoMenu"
+        android:orderInCategory="200"
+        android:title="@string/menu_proximo"
+        app:showAsAction="always"
+        />
+</menu>
