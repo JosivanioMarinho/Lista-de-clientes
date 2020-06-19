@@ -9,7 +9,6 @@ public class Compra implements Serializable {
     private int quantidade;
     private double preco;
     private double valor;
-    private Long cliente_id;
 
     public Compra() {
     }
@@ -61,11 +60,4 @@ public class Compra implements Serializable {
         this.valor = valor;
     }
 
-    public Long getCliente_id() {
-        return cliente_id;
-    }
-
-    public void setCliente_id(Long cliente_id) {
-        this.cliente_id = cliente_id;
-    }
 }

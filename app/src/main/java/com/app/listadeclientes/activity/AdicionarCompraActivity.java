@@ -12,13 +12,23 @@ import android.widget.Toast;
 import com.app.listadeclientes.R;
 import com.app.listadeclientes.helper.CompraDAO;
 import com.app.listadeclientes.model.Compra;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class AdicionarCompraActivity extends AppCompatActivity {
+
+    private TextInputEditText inputDescricao;
+    private TextInputEditText inputQuantidade;
+    private TextInputEditText inputPreco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_compra);
+
+        inputDescricao  = findViewById(R.id.inputDescricao);
+        inputQuantidade = findViewById(R.id.inputQuantidade);
+        inputPreco      = findViewById(R.id.inputPreco);
+
     }
 
     @Override
@@ -37,15 +47,22 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                 break;
             case R.id.botaoSalvar :
 
+                String descricao  = inputDescricao.getText().toString();
+                String quantidade = inputQuantidade.getText().toString();
+                String preco      = inputPreco.getText().toString();
+                Double total = Double.parseDouble(preco) * Integer.parseInt(quantidade);
+
                 CompraDAO compraDAO = new CompraDAO(getApplicationContext());
 
                 Compra compra = new Compra();
-                compra.setDescricao("Milho");
-                compra.setQuantidade(5);
-                compra.setPreco(70.0);
-                compra.setValor(350.0);
+                compra.setDescricao(descricao);
+                compra.setQuantidade(Integer.parseInt(quantidade));
+                compra.setPreco(Double.parseDouble(preco));
+                compra.setValor(total);
 
                 compraDAO.salvar(compra);
+
+                finish();
 
                 break;
         }

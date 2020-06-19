@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Preço"
+            android:textColor="#454343"
             android:textSize="16sp" />
 
         <TextView
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Valor total"
+            android:textColor="#454343"
             android:textSize="16sp" />
     </LinearLayout>
 

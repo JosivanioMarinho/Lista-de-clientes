@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.app.listadeclientes.R;
 import com.app.listadeclientes.adapter.AdapterListaCompras;
+import com.app.listadeclientes.helper.CompraDAO;
 import com.app.listadeclientes.model.Cliente;
 import com.app.listadeclientes.model.Compra;
 
@@ -56,19 +57,8 @@ public class DadosClienteActivity extends AppCompatActivity {
     public void carregarListaCompras(){
 
         //lista com os itens para o adapter
-        Compra compra1 = new Compra();
-        compra1.setDescricao("Ração de sabiá");
-        compra1.setQuantidade(3);
-        compra1.setPreco(5.0);
-        compra1.setValor(10.0);
-        listaDeCompras.add(compra1);
-
-        Compra compra2 = new Compra();
-        compra2.setDescricao("Ração pra cachorro");
-        compra2.setQuantidade(1);
-        compra2.setPreco(8.0);
-        compra2.setValor(8.0);
-        listaDeCompras.add(compra2);
+        CompraDAO compraDAO = new CompraDAO(getApplicationContext());
+        listaDeCompras = compraDAO.listar();
 
         //Configurar Adapter
         adapterListaCompras = new AdapterListaCompras(listaDeCompras);

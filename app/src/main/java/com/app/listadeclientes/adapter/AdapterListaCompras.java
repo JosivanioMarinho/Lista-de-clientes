@@ -39,9 +39,9 @@ public class AdapterListaCompras extends RecyclerView.Adapter<AdapterListaCompra
         holder.descricaoComprasLista.setText(compra.getDescricao());
         holder.quantidadeComprasLista.setText(Integer.toString(compra.getQuantidade()));
         //String preco = String.valueOf(compra.getPreco());
-        holder.precoComprasLista.setText(Double.toString(compra.getPreco()));
+        holder.precoComprasLista.setText("Preço: $ " + Double.toString(compra.getPreco()));
         //String valor = String.valueOf(compra.getValor());
-        holder.totalComprasLista.setText(Double.toString(compra.getValor()));
+        holder.totalComprasLista.setText("Valor Total: $ " + Double.toString(compra.getValor()));
 
     }
 
