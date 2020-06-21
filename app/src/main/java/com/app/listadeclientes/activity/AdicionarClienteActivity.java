@@ -26,6 +26,8 @@ public class AdicionarClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_cliente);
 
+        getSupportActionBar().setTitle("Adicionar cliente");
+
         inputNomeCliente     = findViewById(R.id.inputNomeCliente);
         inputEnderecoCliente = findViewById(R.id.inputEnderecoCliente);
         inputDataCliente     = findViewById(R.id.inputDataCliente);
@@ -44,7 +46,6 @@ public class AdicionarClienteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        Intent irParaAdicionarCompra = new Intent(getApplicationContext(), AdicionarCompraActivity.class);
 
         if(id == R.id.botaoProximoMenu){
 
@@ -62,11 +63,12 @@ public class AdicionarClienteActivity extends AppCompatActivity {
                 cliente.setNome(nome);
                 cliente.setEndereco(endereco);
                 cliente.setData(data);
-                cliente.setTelefone(telefone);
+                if (telefone == null || telefone.equals("")){
+                    cliente.setTelefone("telefone");
+                }else{cliente.setTelefone(telefone); }
 
                 clienteDAO.salvar(cliente);
 
-                startActivity(irParaAdicionarCompra);
                 finish();
             }else{
                 Toast.makeText(getApplicationContext(),"Preencha todos os campos", Toast.LENGTH_SHORT).show();

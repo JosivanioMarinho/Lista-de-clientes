@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".activity.AdicionarClienteActivity">
+    tools:context=".activity.AdicionarClienteActivity"
+    >
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

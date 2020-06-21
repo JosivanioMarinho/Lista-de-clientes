@@ -25,6 +25,8 @@ public class AdicionarCompraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_compra);
 
+        getSupportActionBar().setTitle("Adicionar compra");
+
         inputDescricao  = findViewById(R.id.inputDescricao);
         inputQuantidade = findViewById(R.id.inputQuantidade);
         inputPreco      = findViewById(R.id.inputPreco);
@@ -42,9 +44,6 @@ public class AdicionarCompraActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.botaoAdicionar :
-                Toast.makeText(getApplicationContext(), "Adiconado", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.botaoSalvar :
 
                 String descricao  = inputDescricao.getText().toString();

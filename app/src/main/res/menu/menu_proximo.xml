@@ -6,6 +6,7 @@
         android:id="@+id/botaoProximoMenu"
         android:orderInCategory="200"
         android:title="@string/menu_proximo"
+        android:icon="@drawable/ic_concluir_compra"
         app:showAsAction="always"
         />
 </menu>

@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-
+                                //Ir para tela dos dados do cliente
                                 Cliente dadosCliente = listaDeClientes.get(position);
 
                                 Intent telaDadosCliente = new Intent(MainActivity.this, DadosClienteActivity.class);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onLongItemClick(View view, int position) {
-
+                                //Deletar cliente
                                 clienteSelecionado = listaDeClientes.get(position);
 
                                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);

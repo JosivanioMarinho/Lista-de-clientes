@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/botaoSalvar"
-        android:title="Salvar"
-        android:orderInCategory="200"
-        android:icon="@drawable/ic_concluir_compra"
+        android:id="@+id/botaoAdicionarCompra"
+        android:title="Adicionar"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_add_shopping"
         app:showAsAction="always"
         />
 

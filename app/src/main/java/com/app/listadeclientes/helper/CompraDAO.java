@@ -48,7 +48,16 @@ public class CompraDAO implements ICompraDAO {
 
     @Override
     public boolean deletar(Compra compra) {
-        return false;
+
+        try{
+            String[] args = {compra.getId().toString()};
+            escrever.delete(BdHelper.TABELA_COMPRA, "id_compra=?", args);
+        }catch(Exception e){
+            Log.i("deletarcompra", "Erro ao deletar " + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     @Override
