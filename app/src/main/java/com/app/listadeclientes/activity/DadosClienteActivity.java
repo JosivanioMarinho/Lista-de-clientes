@@ -74,6 +74,13 @@ public class DadosClienteActivity extends AppCompatActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 //Atualizar compra
+                                Compra atualizarCompra = listaDeCompras.get(position);
+
+                                //Enviar compra para tela de adicionar compra
+                                Intent intent = new Intent(DadosClienteActivity.this, AdicionarCompraActivity.class);
+                                intent.putExtra("atualizarCompra", atualizarCompra);
+
+                                startActivity(intent);
                             }
 
                             @Override

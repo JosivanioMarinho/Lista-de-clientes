@@ -36,6 +36,7 @@ public class CompraDAO implements ICompraDAO {
             Log.i("svcompra", "Sucesso ao salvar compra!");
         }catch (Exception e){
             Log.i("svcompra", "Erro ao salvar compra " + e.getMessage());
+            return false;
         }
 
         return true;
@@ -43,7 +44,23 @@ public class CompraDAO implements ICompraDAO {
 
     @Override
     public boolean atualizar(Compra compra) {
-        return false;
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("descricao", compra.getDescricao());
+        contentValues.put("quantidade", compra.getQuantidade());
+        contentValues.put("preco", compra.getPreco());
+        contentValues.put("valor", compra.getValor());
+
+        try{
+            String[] args = {compra.getId().toString()};
+            escrever.update(BdHelper.TABELA_COMPRA, contentValues, "id_compra=?", args );
+            Log.i("atualizar", "Sucesso ao atualizar compra!");
+        }catch (Exception e){
+            Log.i("atualizar", "Erro ao atualizar compra" + e.getMessage());
+            return false;
+        }
+
+        return true;
     }
 
     @Override
