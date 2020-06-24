@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CpuUsageInfo;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.app.listadeclientes.R;
 import com.app.listadeclientes.helper.CompraDAO;
+import com.app.listadeclientes.model.Cliente;
 import com.app.listadeclientes.model.Compra;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,13 +24,12 @@ public class AdicionarCompraActivity extends AppCompatActivity {
     private TextInputEditText inputPreco;
 
     private Compra compraAtual;
+    private Cliente clienteID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_compra);
-
-        getSupportActionBar().setTitle("Adicionar compra");
 
         inputDescricao  = findViewById(R.id.inputDescricao);
         inputQuantidade = findViewById(R.id.inputQuantidade);
@@ -42,7 +43,16 @@ public class AdicionarCompraActivity extends AppCompatActivity {
             inputDescricao.setText(compraAtual.getDescricao());
             inputQuantidade.setText(String.valueOf(compraAtual.getQuantidade()));
             inputPreco.setText(String.valueOf(compraAtual.getPreco()));
+
+            //Mudar título da toobar caso seja edição da compra
+            getSupportActionBar().setTitle("Atualizar dados da compra");
+        }else{
+            //caso não seja atualização, será adição de uma compra
+            getSupportActionBar().setTitle("Adicionar compra");
         }
+
+        //Configurando id do cliente para listagem de compras
+        clienteID = (Cliente) getIntent().getSerializableExtra("enviarID");
 
     }
 
@@ -94,6 +104,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                     String quantidade = inputQuantidade.getText().toString();
                     String preco      = inputPreco.getText().toString();
                     Double total      = 0.0;
+                    Long cID          = clienteID.getId();
 
                     boolean camposValidados = validarCampos(descricao, quantidade, preco, total);
 
@@ -105,6 +116,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                         compra.setPreco(Double.parseDouble(preco));
                         total = Integer.parseInt(quantidade) * Double.parseDouble(preco);
                         compra.setValor(total);
+                        compra.setClient_id(cID);
 
                         if (compraDAO.salvar(compra)){
                             finish();

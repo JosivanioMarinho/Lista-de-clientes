@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class BdHelper extends SQLiteOpenHelper {
 
-    private static int VERSION = 3;
+    private static int VERSION = 8;
     private static String NOME_BD = "LISTA_CLIENTES";
     public static String TABELA_CLIENTE = "cliente";
     public static String TABELA_COMPRA = "compra";
@@ -36,6 +36,15 @@ public class BdHelper extends SQLiteOpenHelper {
         }
     }
 
+   /* @Override
+    public void onOpen(SQLiteDatabase db){
+        super.onOpen(db);
+        if (!db.isReadOnly()){
+            db.execSQL(" PRAGMA foreign_keys=ON ; ");
+            Log.i("foreignkeys", "Chave estrangeira ativada");
+        }
+    }*/
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -44,13 +53,15 @@ public class BdHelper extends SQLiteOpenHelper {
                 + " descricao TEXT NOT NULL, "
                 + " quantidade INTEGER NOT NULL, "
                 + " preco FLOAT NOT NULL, "
-                + " valor FLOAT NOT NULL "
+                + " valor FLOAT NOT NULL, "
+                + " cliente_id INTEGER NOT NULL, "
+                + " FOREIGN KEY (cliente_id) REFERENCES " + TABELA_CLIENTE + " (id_cliente) "
                 + " ); ";
         try {
             db.execSQL(sqlCompra);
-            Log.i("tabelaCompra", "Sucesso ao criar tabela!" );
+            Log.i("tabelaCompra", "Sucesso ao CRIAR  tabela!" );
         }catch (Exception e){
-            Log.i("tabelaCompra", "Erro ao criar tabela " + e.getMessage());
+            Log.i("tabelaCompra", "Erro ao CRIAR tabela " + e.getMessage());
         }
     }
 }

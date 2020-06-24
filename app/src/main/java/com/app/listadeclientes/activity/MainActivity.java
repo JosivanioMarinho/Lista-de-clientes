@@ -14,6 +14,7 @@ import com.app.listadeclientes.helper.ClienteDAO;
 import com.app.listadeclientes.helper.RecyclerItemClickListener;
 import com.app.listadeclientes.model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private AdapterListaClientes adapterListaClientes;
     private List<Cliente> listaDeClientes = new ArrayList<>();
     private Cliente clienteSelecionado;
+    private MaterialSearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +126,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //configurar searchView
+        searchView = findViewById(R.id.materialSearchPesquisa);
+
+        //Listener para searchView
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Apresenta algo pro usuário
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                recarregarNomesClientes();
+            }
+        });
+
+        //Listeber para caixa de texto
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //Executado a pesquisa após o input de pesquisa
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Pesquisa em tempo de execução
+                if (newText != null && !newText.isEmpty()){
+                    pesquisarCliente(newText.toLowerCase());
+                }
+                return true;
+            }
+        });
+
     }
 
     public void carregarListaClientes(){
@@ -154,7 +192,38 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_pesquisa, menu);
 
+        //Configurar o botão de pesquisa
+        MenuItem menuItem = menu.findItem(R.id.menuPesquisa);
+        searchView.setMenuItem(menuItem);
+
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void pesquisarCliente(String nome){
+        //Log.d("pesquisa", nome);
+        List<Cliente> listaClienteBusca = new ArrayList<>();
+
+        for ( Cliente dadosCliente : listaDeClientes ){
+
+            String nomeCliente = dadosCliente.getNome().toLowerCase();
+            if ( nomeCliente.contains( nome ) ){
+                listaClienteBusca.add(dadosCliente);
+            }
+        }
+
+        adapterListaClientes = new AdapterListaClientes(listaClienteBusca);
+        recyclerListarClientes.setAdapter(adapterListaClientes);
+        adapterListaClientes.notifyDataSetChanged();
+    }
+
+    public void recarregarNomesClientes(){
+        adapterListaClientes = new AdapterListaClientes(listaDeClientes);
+        recyclerListarClientes.setAdapter(adapterListaClientes);
+        adapterListaClientes.notifyDataSetChanged();
+    }
 }

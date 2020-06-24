@@ -30,6 +30,7 @@ public class CompraDAO implements ICompraDAO {
         contentValues.put("quantidade", compra.getQuantidade());
         contentValues.put("preco", compra.getPreco());
         contentValues.put("valor", compra.getValor());
+        contentValues.put("cliente_id", compra.getClient_id());
 
         try{
             escrever.insert(BdHelper.TABELA_COMPRA, null, contentValues);
@@ -82,6 +83,8 @@ public class CompraDAO implements ICompraDAO {
 
         List<Compra> listaCompras = new ArrayList();
 
+        /*String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " INNER JOIN "
+                    + BdHelper.TABELA_CLIENTE + " ON cliente.id_cliente = compra.cliente_id ; ";*/
         String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " ;";
 
         Cursor cursor = ler.rawQuery(sql, null);
@@ -93,6 +96,7 @@ public class CompraDAO implements ICompraDAO {
             Integer quantidade  = cursor.getInt(cursor.getColumnIndex("quantidade"));
             Double preco        = cursor.getDouble(cursor.getColumnIndex("preco"));
             Double valor        = cursor.getDouble(cursor.getColumnIndex("valor"));
+            //Long clienteID      = cursor.getLong(cursor.getColumnIndex("cliente_id"));
 
             Compra compra = new Compra();
 
@@ -101,6 +105,7 @@ public class CompraDAO implements ICompraDAO {
             compra.setQuantidade(quantidade);
             compra.setPreco(preco);
             compra.setValor(valor);
+            //compra.setClient_id(clienteID);
 
             listaCompras.add(compra);
         }

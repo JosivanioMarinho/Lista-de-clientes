@@ -137,9 +137,10 @@ public class DadosClienteActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
-        Intent telaAddCompra = new Intent(getApplicationContext(), AdicionarCompraActivity.class);
-
+        Intent telaAddCompra = new Intent(DadosClienteActivity.this, AdicionarCompraActivity.class);
+        Cliente enviarID = dadosCliente;
         if (id == R.id.botaoAdicionarCompra){
+            telaAddCompra.putExtra("enviarID", enviarID);
             startActivity(telaAddCompra);
         }
 
