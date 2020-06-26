@@ -14,14 +14,6 @@ public class Compra implements Serializable {
     public Compra() {
     }
 
-    public Long getClient_id() {
-        return client_id;
-    }
-
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
-    }
-
     public int getQuantidade() {
         return quantidade;
     }
@@ -67,6 +59,14 @@ public class Compra implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public Long getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(Long client_id) {
+        this.client_id = client_id;
     }
 
 }

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.app.listadeclientes.activity.AdicionarCompraActivity;
+import com.app.listadeclientes.model.Cliente;
 import com.app.listadeclientes.model.Compra;
 
 import java.util.ArrayList;
@@ -15,6 +17,13 @@ public class CompraDAO implements ICompraDAO {
 
     private SQLiteDatabase escrever;
     private SQLiteDatabase ler;
+
+    public Long id;
+
+    public CompraDAO(Long id){
+        this.id = id;
+        Log.d("contrutor", "id construto = "+ this.id);
+    }
 
     public CompraDAO(Context context) {
         BdHelper bd = new BdHelper(context);
@@ -82,10 +91,9 @@ public class CompraDAO implements ICompraDAO {
     public List<Compra> listar() {
 
         List<Compra> listaCompras = new ArrayList();
-
-        /*String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " INNER JOIN "
-                    + BdHelper.TABELA_CLIENTE + " ON cliente.id_cliente = compra.cliente_id ; ";*/
-        String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " ;";
+        Log.d("idDAO", "idDAO preenchido -----" + id);
+        String sql = " SELECT * FROM compra WHERE compra.cliente_id="+this.id+";";
+       // String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " ;";
 
         Cursor cursor = ler.rawQuery(sql, null);
 
@@ -96,7 +104,7 @@ public class CompraDAO implements ICompraDAO {
             Integer quantidade  = cursor.getInt(cursor.getColumnIndex("quantidade"));
             Double preco        = cursor.getDouble(cursor.getColumnIndex("preco"));
             Double valor        = cursor.getDouble(cursor.getColumnIndex("valor"));
-            //Long clienteID      = cursor.getLong(cursor.getColumnIndex("cliente_id"));
+            Long clienteID      = cursor.getLong(cursor.getColumnIndex("cliente_id"));
 
             Compra compra = new Compra();
 
@@ -105,7 +113,7 @@ public class CompraDAO implements ICompraDAO {
             compra.setQuantidade(quantidade);
             compra.setPreco(preco);
             compra.setValor(valor);
-            //compra.setClient_id(clienteID);
+            compra.setClient_id(clienteID);
 
             listaCompras.add(compra);
         }

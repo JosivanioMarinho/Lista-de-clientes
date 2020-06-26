@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.app.listadeclientes.R;
 import com.app.listadeclientes.helper.ClienteDAO;
 import com.app.listadeclientes.model.Cliente;
+import com.app.listadeclientes.model.Compra;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AdicionarClienteActivity extends AppCompatActivity {

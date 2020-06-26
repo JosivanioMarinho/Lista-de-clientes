@@ -105,6 +105,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                     String preco      = inputPreco.getText().toString();
                     Double total      = 0.0;
                     Long cID          = clienteID.getId();
+                    Log.d("cID", " ID do cliente --- " + cID);
 
                     boolean camposValidados = validarCampos(descricao, quantidade, preco, total);
 

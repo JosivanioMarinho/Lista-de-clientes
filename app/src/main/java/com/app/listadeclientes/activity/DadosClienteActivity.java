@@ -65,6 +65,8 @@ public class DadosClienteActivity extends AppCompatActivity {
         textDataClientet.setText(dadosCliente.getData());
         textTelefoneCliente.setText(dadosCliente.getTelefone());
 
+        CompraDAO id = new CompraDAO(dadosCliente.getId());
+
         //Adicionar evento de click
         recyclerListaCompras.addOnItemTouchListener(
                 new RecyclerItemClickListener(
@@ -167,6 +169,7 @@ public class DadosClienteActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        Long id = dadosCliente.getId();
         carregarListaCompras();
         super.onStart();
     }
