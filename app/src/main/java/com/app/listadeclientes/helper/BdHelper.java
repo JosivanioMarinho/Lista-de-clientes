@@ -47,14 +47,14 @@ public class BdHelper extends SQLiteOpenHelper {
         }
     }
 
-   @Override
+  /* @Override
     public void onOpen(SQLiteDatabase db){
         super.onOpen(db);
         if (!db.isReadOnly()){
             db.execSQL(" PRAGMA foreign_keys=ON ; ");
             Log.i("foreignkeys", "Chave estrangeira ativada");
         }
-    }
+    }*/
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

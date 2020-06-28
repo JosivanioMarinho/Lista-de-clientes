@@ -41,7 +41,6 @@ public class DadosClienteActivity extends AppCompatActivity {
     private List<Compra> listaDeCompras = new ArrayList<>();
     private Compra compraSelecionada;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +59,13 @@ public class DadosClienteActivity extends AppCompatActivity {
         //Recupera os dados do cliente que estão na lista
         dadosCliente = (Cliente) getIntent().getSerializableExtra("dadosCliente");
 
+        //Passar id do cliente para listar compras
+        CompraDAO id = new CompraDAO(getApplicationContext(), dadosCliente.getId());
+
         textNomeCliente.setText(dadosCliente.getNome());
         textEnderecoCliente.setText(dadosCliente.getEndereco());
         textDataClientet.setText(dadosCliente.getData());
         textTelefoneCliente.setText(dadosCliente.getTelefone());
-
-        CompraDAO id = new CompraDAO(dadosCliente.getId());
 
         //Adicionar evento de click
         recyclerListaCompras.addOnItemTouchListener(
@@ -97,7 +97,7 @@ public class DadosClienteActivity extends AppCompatActivity {
                                 alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        CompraDAO compraDAO = new CompraDAO(getApplicationContext());
+                                        CompraDAO compraDAO = new CompraDAO(getApplicationContext(), dadosCliente.getId());
                                         if (compraDAO.deletar(compraSelecionada)){
                                             carregarListaCompras();
                                             Toast.makeText(getApplicationContext(), "Compra excluída com sucesso!",
@@ -152,7 +152,7 @@ public class DadosClienteActivity extends AppCompatActivity {
     public void carregarListaCompras(){
 
         //lista com os itens para o adapter
-        CompraDAO compraDAO = new CompraDAO(getApplicationContext());
+        CompraDAO compraDAO = new CompraDAO(getApplicationContext(), dadosCliente.getId());
         listaDeCompras = compraDAO.listar();
 
         //Configurar Adapter
@@ -169,7 +169,6 @@ public class DadosClienteActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        Long id = dadosCliente.getId();
         carregarListaCompras();
         super.onStart();
     }

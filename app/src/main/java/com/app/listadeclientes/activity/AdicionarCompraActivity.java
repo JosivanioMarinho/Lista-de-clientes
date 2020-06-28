@@ -69,7 +69,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.botaoSalvar :
 
-                CompraDAO compraDAO = new CompraDAO(getApplicationContext());
+                CompraDAO compraDAO = new CompraDAO(getApplicationContext(), null);
 
                 if( compraAtual != null ){ //Atualizar
                     String descricao  = inputDescricao.getText().toString();

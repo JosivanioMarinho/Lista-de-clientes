@@ -18,17 +18,13 @@ public class CompraDAO implements ICompraDAO {
     private SQLiteDatabase escrever;
     private SQLiteDatabase ler;
 
-    public Long id;
+    private Long id;
 
-    public CompraDAO(Long id){
-        this.id = id;
-        Log.d("contrutor", "id construto = "+ this.id);
-    }
-
-    public CompraDAO(Context context) {
+    public CompraDAO(Context context, Long id) {
         BdHelper bd = new BdHelper(context);
         escrever = bd.getWritableDatabase();
         ler = bd.getReadableDatabase();
+        this.id = id;
     }
 
     @Override
@@ -91,7 +87,7 @@ public class CompraDAO implements ICompraDAO {
     public List<Compra> listar() {
 
         List<Compra> listaCompras = new ArrayList();
-        Log.d("idDAO", "idDAO preenchido -----" + id);
+        Log.d("idDAO", "idDAO preenchido -----" + this.id);
         String sql = " SELECT * FROM compra WHERE compra.cliente_id="+this.id+";";
        // String sql = " SELECT * FROM " + BdHelper.TABELA_COMPRA + " ;";
 
