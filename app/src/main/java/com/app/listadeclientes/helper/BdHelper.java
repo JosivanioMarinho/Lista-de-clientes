@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class BdHelper extends SQLiteOpenHelper {
 
-    private static int VERSION = 14;
+    private static int VERSION = 17;
     private static String NOME_BD = "LISTA_CLIENTES";
     public static String TABELA_CLIENTE = "cliente";
     public static String TABELA_COMPRA = "compra";
@@ -35,6 +35,7 @@ public class BdHelper extends SQLiteOpenHelper {
                 + " preco FLOAT NOT NULL, "
                 + " valor FLOAT NOT NULL, "
                 + " cliente_id INTEGER NOT NULL, "
+                + " parcelas INTEGER, "
                 + " FOREIGN KEY (cliente_id) REFERENCES " + TABELA_CLIENTE + " (id_cliente) "
                 + " ); ";
 
@@ -59,9 +60,12 @@ public class BdHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        String dropTable = " DROP TABLE IF EXISTS " + TABELA_COMPRA + "; ";
+
         try {
+            db.execSQL(dropTable);
             onCreate(db);
-            Log.i("tabelaCompra", "Sucesso ao Excluir  tabela!" );
+            Log.i("addColunaParcelas", "Sucesso ao add coluna!" );
         }catch (Exception e){
             Log.i("tabelaCompra", "Erro ao Excluir tabela " + e.getMessage());
         }

@@ -34,12 +34,15 @@ public class DadosClienteActivity extends AppCompatActivity {
     private TextView textEnderecoCliente;
     private TextView textDataClientet;
     private TextView textTelefoneCliente;
+    private TextView textValorTotal;
 
     private Cliente dadosCliente;
     private RecyclerView recyclerListaCompras;
     private AdapterListaCompras adapterListaCompras;
     private List<Compra> listaDeCompras = new ArrayList<>();
     private Compra compraSelecionada;
+
+    private double dividaTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +172,15 @@ public class DadosClienteActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
+        CompraDAO compraDAO = new CompraDAO(DadosClienteActivity.this, dadosCliente.getId());
+
+        textValorTotal = findViewById(R.id.textValorTotalCompras);
+
+        dividaTotal = compraDAO.valorTotal();
+
+        textValorTotal.setText("Valor total das compras: R$ " + String.format("%.2f", dividaTotal));
+
         carregarListaCompras();
         super.onStart();
     }

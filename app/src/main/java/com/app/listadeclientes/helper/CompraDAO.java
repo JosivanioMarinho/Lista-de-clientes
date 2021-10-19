@@ -35,6 +35,7 @@ public class CompraDAO implements ICompraDAO {
         contentValues.put("quantidade", compra.getQuantidade());
         contentValues.put("preco", compra.getPreco());
         contentValues.put("valor", compra.getValor());
+        contentValues.put("parcelas", compra.getQtdParcelas());
         contentValues.put("cliente_id", compra.getClient_id());
 
         try{
@@ -56,6 +57,7 @@ public class CompraDAO implements ICompraDAO {
         contentValues.put("quantidade", compra.getQuantidade());
         contentValues.put("preco", compra.getPreco());
         contentValues.put("valor", compra.getValor());
+        contentValues.put("parcelas", compra.getQtdParcelas());
 
         try{
             String[] args = {compra.getId().toString()};
@@ -100,6 +102,7 @@ public class CompraDAO implements ICompraDAO {
             Integer quantidade  = cursor.getInt(cursor.getColumnIndex("quantidade"));
             Double preco        = cursor.getDouble(cursor.getColumnIndex("preco"));
             Double valor        = cursor.getDouble(cursor.getColumnIndex("valor"));
+            Integer qtdParcelas = cursor.getInt(cursor.getColumnIndex("parcelas"));
             Long clienteID      = cursor.getLong(cursor.getColumnIndex("cliente_id"));
 
             Compra compra = new Compra();
@@ -109,11 +112,26 @@ public class CompraDAO implements ICompraDAO {
             compra.setQuantidade(quantidade);
             compra.setPreco(preco);
             compra.setValor(valor);
+            compra.setQtdParcelas(qtdParcelas);
             compra.setClient_id(clienteID);
 
             listaCompras.add(compra);
         }
 
         return listaCompras;
+    }
+
+    public double valorTotal(){
+        double total = 0;
+
+        String sql = " SELECT * FROM compra WHERE compra.cliente_id="+this.id+";";
+
+        Cursor cursor = ler.rawQuery(sql, null);
+
+        while (cursor.moveToNext()){
+            total += cursor.getDouble(cursor.getColumnIndex("valor"));
+        }
+
+        return total;
     }
 }

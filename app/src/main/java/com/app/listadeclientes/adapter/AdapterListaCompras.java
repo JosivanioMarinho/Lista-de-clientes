@@ -39,9 +39,12 @@ public class AdapterListaCompras extends RecyclerView.Adapter<AdapterListaCompra
         holder.descricaoComprasLista.setText(compra.getDescricao());
         holder.quantidadeComprasLista.setText(Integer.toString(compra.getQuantidade()));
         //String preco = String.valueOf(compra.getPreco());
-        holder.precoComprasLista.setText("Preço: $ " + Double.toString(compra.getPreco()));
+        holder.precoComprasLista.setText("Preço: R$ " + String.format("%.2f", compra.getPreco()));
         //String valor = String.valueOf(compra.getValor());
-        holder.totalComprasLista.setText("Valor Total: $ " + Double.toString(compra.getValor()));
+        holder.totalComprasLista.setText("Valor Total: R$ " + String.format("%.2f", compra.getValor()));
+        Integer qtdP = compra.getQtdParcelas();
+        Double vt = compra.getValor();
+        holder.qtdParcelas.setText(Integer.toString(compra.getQtdParcelas()) +"x " + "R$ " + String.format("%.2f", vt / qtdP) );
 
     }
 
@@ -56,6 +59,7 @@ public class AdapterListaCompras extends RecyclerView.Adapter<AdapterListaCompra
         TextView quantidadeComprasLista;
         TextView precoComprasLista;
         TextView totalComprasLista;
+        TextView qtdParcelas;
 
         public MyViewHolderCompras(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +68,7 @@ public class AdapterListaCompras extends RecyclerView.Adapter<AdapterListaCompra
             quantidadeComprasLista = itemView.findViewById(R.id.textQuantidadeProduto);
             precoComprasLista = itemView.findViewById(R.id.textPrecoProdutoLista);
             totalComprasLista = itemView.findViewById(R.id.textValorTotalProdutoLista);
+            qtdParcelas = itemView.findViewById(R.id.textQtdParcelas);
 
         }
     }

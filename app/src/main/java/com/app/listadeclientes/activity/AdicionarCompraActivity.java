@@ -22,6 +22,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
     private TextInputEditText inputDescricao;
     private TextInputEditText inputQuantidade;
     private TextInputEditText inputPreco;
+    private TextInputEditText inputQtdParcelas;
 
     private Compra compraAtual;
     private Cliente clienteID;
@@ -31,9 +32,10 @@ public class AdicionarCompraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_compra);
 
-        inputDescricao  = findViewById(R.id.inputDescricao);
-        inputQuantidade = findViewById(R.id.inputQuantidade);
-        inputPreco      = findViewById(R.id.inputPreco);
+        inputDescricao   = findViewById(R.id.inputDescricao);
+        inputQuantidade  = findViewById(R.id.inputQuantidade);
+        inputPreco       = findViewById(R.id.inputPreco);
+        inputQtdParcelas = findViewById(R.id.inputQtdParcelas);
 
         //Recuperar os dados da compra para atualiza-la
         compraAtual = (Compra) getIntent().getSerializableExtra("atualizarCompra");
@@ -43,6 +45,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
             inputDescricao.setText(compraAtual.getDescricao());
             inputQuantidade.setText(String.valueOf(compraAtual.getQuantidade()));
             inputPreco.setText(String.valueOf(compraAtual.getPreco()));
+            inputQtdParcelas.setText(String.valueOf(compraAtual.getQtdParcelas()));
 
             //Mudar título da toobar caso seja edição da compra
             getSupportActionBar().setTitle("Atualizar dados da compra");
@@ -76,8 +79,9 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                     String quantidade = inputQuantidade.getText().toString();
                     String preco      = inputPreco.getText().toString();
                     Double total      = 0.0;
+                    String parcelas  = inputQtdParcelas.getText().toString();
 
-                    boolean camposValidados = validarCampos(descricao, quantidade, preco, total);
+                    boolean camposValidados = validarCampos(descricao, quantidade, preco, total, parcelas);
 
                     if (camposValidados){
                         Compra compraAtualizar = new Compra();
@@ -87,6 +91,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                         compraAtualizar.setPreco(Double.parseDouble(preco));
                         total = Integer.parseInt(quantidade) * Double.parseDouble(preco);
                         compraAtualizar.setValor(total);
+                        compraAtualizar.setQtdParcelas(Integer.parseInt(parcelas));
 
                         //Atualizar banco de dados
                         if (compraDAO.atualizar(compraAtualizar)){
@@ -104,10 +109,10 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                     String quantidade = inputQuantidade.getText().toString();
                     String preco      = inputPreco.getText().toString();
                     Double total      = 0.0;
+                    String parcelas   = inputQtdParcelas.getText().toString();
                     Long cID          = clienteID.getId();
-                    Log.d("cID", " ID do cliente --- " + cID);
 
-                    boolean camposValidados = validarCampos(descricao, quantidade, preco, total);
+                    boolean camposValidados = validarCampos(descricao, quantidade, preco, total, parcelas);
 
                     if (camposValidados){
                         Compra compra = new Compra();
@@ -117,6 +122,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
                         compra.setPreco(Double.parseDouble(preco));
                         total = Integer.parseInt(quantidade) * Double.parseDouble(preco);
                         compra.setValor(total);
+                        compra.setQtdParcelas(Integer.parseInt(parcelas));
                         compra.setClient_id(cID);
 
                         if (compraDAO.salvar(compra)){
@@ -136,7 +142,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public boolean validarCampos(String descricao, String quantidade, String preco, Double total){
+    public boolean validarCampos(String descricao, String quantidade, String preco, Double total, String parcelas){
 
         boolean campos = true;
 
@@ -144,6 +150,7 @@ public class AdicionarCompraActivity extends AppCompatActivity {
         if (quantidade == null || quantidade.equals("")){campos = false;}
         if (preco == null || preco.equals("")){campos = false;}
         if (total == null || total.equals("")){campos = false;}
+        if (parcelas == null || parcelas.equals("")){campos = false;}
 
         return campos;
     }

@@ -10,8 +10,17 @@ public class Compra implements Serializable {
     private double preco;
     private double valor;
     private Long client_id;
+    private Integer qtdParcelas;
 
     public Compra() {
+    }
+
+    public Integer getQtdParcelas() {
+        return qtdParcelas;
+    }
+
+    public void setQtdParcelas(Integer qtdParcelas) {
+        this.qtdParcelas = qtdParcelas;
     }
 
     public int getQuantidade() {
